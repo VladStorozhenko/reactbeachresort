@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import defaultBcg from "../images/room-1.jpeg";
-import Hero from "../components/Hero";
 import Banner from "../components/Banner";
 
 import { Link } from "react-router-dom";
@@ -8,16 +7,18 @@ import { RoomContext } from "../context";
 
 import StyledHero from "../components/StyledHero";
 
+import BookButton from '../components/BookButton'
+
 export default class SingleRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
       slug: this.props.match.params.slug,
       defaultBcg,
+      id: this.props.key
     };
   }
   static contextType = RoomContext;
-  //   componentDidMount() {}}
   render() {
     const { getRoom } = this.context;
     const room = getRoom(this.state.slug);
@@ -32,6 +33,7 @@ export default class SingleRoom extends Component {
       );
     }
     const {
+      id,
       name,
       description,
       capacity,
@@ -43,6 +45,7 @@ export default class SingleRoom extends Component {
       images,
     } = room;
     const [mainImg, ...defaultImg] = images;
+    console.log(id)
     return (
       <>
         <StyledHero img={images[0] || this.state.defaultBcg}>
@@ -65,6 +68,8 @@ export default class SingleRoom extends Component {
             </article>
             <article className="info">
               <h3>Info</h3>
+              {/* <button className="btn-primary" style={{marginBottom: 15}} onClick={() => bookRoom(id)}>Book room</button> */}
+              <BookButton roomId={id} />
               <h6>Price: ${price}</h6>
               <h6>Size: ${size} SQFT</h6>
               <h6>
